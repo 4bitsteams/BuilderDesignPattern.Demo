@@ -1,3 +1,5 @@
+using BuilderDesignPattern.Demo.Interface;
+using BuilderDesignPattern.Demo.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +34,11 @@ namespace BuilderDesignPattern.Demo
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BuilderDesignPattern.Demo", Version = "v1" });
             });
+
+            services.AddSingleton<IUser>(new User.UserBuilder()
+            .WithName("John")
+            .WithAddress("123 Street")
+            .Build());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

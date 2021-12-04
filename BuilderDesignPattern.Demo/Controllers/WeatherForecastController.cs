@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BuilderDesignPattern.Demo.Interface;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,15 +18,18 @@ namespace BuilderDesignPattern.Demo.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IUser _iuser;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger,IUser iuser)
         {
             _logger = logger;
+            _iuser = iuser;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            var address = _iuser.Address;
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
